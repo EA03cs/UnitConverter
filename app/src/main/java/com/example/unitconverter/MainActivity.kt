@@ -24,6 +24,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,7 +54,13 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun UnitConverter() {
-
+    var inputVal by remember { mutableStateOf("") }
+    var outputVal by remember { mutableStateOf("") }
+    var inputUnit by remember { mutableStateOf("Centimeter") }
+    var outputUnit by remember { mutableStateOf("Meters") }
+    var expanded by remember { mutableStateOf(false) }
+    var expanded2 by remember { mutableStateOf(false) }
+    var conversion by remember { mutableStateOf(0.01) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,13 +71,18 @@ fun UnitConverter() {
         Text("Unit Converter")
         Spacer(modifier = Modifier.height(20.dp))
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = inputVal,
+            onValueChange = {
+                inputVal = it
+            },
+            label = { Text("Enter Value") },
         )
         Spacer(modifier = Modifier.height(20.dp))
         Row {
             Box {
-                Button(onClick = {}) {
+                Button(onClick = {
+                    expanded = true
+                }) {
                     Text("Select Unit")
                     Icon(
                         Icons.Default.ArrowDropDown,
@@ -77,8 +92,10 @@ fun UnitConverter() {
                 }
 
                 DropdownMenu(
-                    expanded = true,
-                    onDismissRequest = {}
+                    expanded = expanded,
+                    onDismissRequest = {
+                        expanded = false
+                    }
                 ) {
                     Text("Meter", modifier = Modifier.padding(10.dp))
                     Text("Centimeter", modifier = Modifier.padding(10.dp))
@@ -89,7 +106,9 @@ fun UnitConverter() {
             Spacer(modifier = Modifier.width(20.dp))
 
             Box {
-                Button(onClick = {}) {
+                Button(onClick = {
+                    expanded2 = true
+                }) {
                     Text("Select Unit")
                     Icon(
                         Icons.Default.ArrowDropDown,
@@ -99,8 +118,10 @@ fun UnitConverter() {
                 }
 
                 DropdownMenu(
-                    expanded = true,
-                    onDismissRequest = {}
+                    expanded = expanded2,
+                    onDismissRequest = {
+                        expanded2 = false
+                    }
                 ) {
                     Text("Meter", modifier = Modifier.padding(10.dp))
                     Text("Centimeter", modifier = Modifier.padding(10.dp))
