@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -80,10 +81,8 @@ fun UnitConverter() {
         Spacer(modifier = Modifier.height(20.dp))
         Row {
             Box {
-                Button(onClick = {
-                    expanded = true
-                }) {
-                    Text("Select Unit")
+                Button(onClick = { expanded = true }) {
+                    Text(inputUnit)
                     Icon(
                         Icons.Default.ArrowDropDown,
                         contentDescription = null,
@@ -93,23 +92,42 @@ fun UnitConverter() {
 
                 DropdownMenu(
                     expanded = expanded,
-                    onDismissRequest = {
-                        expanded = false
-                    }
+                    onDismissRequest = { expanded = false }
                 ) {
-                    Text("Meter", modifier = Modifier.padding(10.dp))
-                    Text("Centimeter", modifier = Modifier.padding(10.dp))
-                    Text("Kilometer", modifier = Modifier.padding(10.dp))
+                    DropdownMenuItem(
+                        text = { Text("Meter") },
+                        onClick = {
+                            inputUnit = "Meter"
+                            conversion = 1.0
+                            expanded = false
+                        }
+                    )
+
+                    DropdownMenuItem(
+                        text = { Text("Centimeter") },
+                        onClick = {
+                            inputUnit = "Centimeter"
+                            conversion = 0.01
+                            expanded = false
+                        }
+                    )
+
+                    DropdownMenuItem(
+                        text = { Text("Kilometer") },
+                        onClick = {
+                            inputUnit = "Kilometer"
+                            conversion = 1000.0
+                            expanded = false
+                        }
+                    )
                 }
             }
 
             Spacer(modifier = Modifier.width(20.dp))
 
             Box {
-                Button(onClick = {
-                    expanded2 = true
-                }) {
-                    Text("Select Unit")
+                Button(onClick = { expanded2 = true }) {
+                    Text(outputUnit)
                     Icon(
                         Icons.Default.ArrowDropDown,
                         contentDescription = null,
@@ -119,17 +137,35 @@ fun UnitConverter() {
 
                 DropdownMenu(
                     expanded = expanded2,
-                    onDismissRequest = {
-                        expanded2 = false
-                    }
+                    onDismissRequest = { expanded2 = false }
                 ) {
-                    Text("Meter", modifier = Modifier.padding(10.dp))
-                    Text("Centimeter", modifier = Modifier.padding(10.dp))
-                    Text("Kilometer", modifier = Modifier.padding(10.dp))
+                    DropdownMenuItem(
+                        text = { Text("Meter") },
+                        onClick = {
+                            outputUnit = "Meter"
+                            expanded2 = false
+                        }
+                    )
+
+                    DropdownMenuItem(
+                        text = { Text("Centimeter") },
+                        onClick = {
+                            outputUnit = "Centimeter"
+                            expanded2 = false
+                        }
+                    )
+
+                    DropdownMenuItem(
+                        text = { Text("Kilometer") },
+                        onClick = {
+                            outputUnit = "Kilometer"
+                            expanded2 = false
+                        }
+                    )
                 }
             }
         }
-        Text("result :")
+        Text("result : $outputVal")
     }
 }
 
